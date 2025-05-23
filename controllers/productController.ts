@@ -11,8 +11,7 @@ class ProductController {
         this.createProduct = this.createProduct.bind(this);
         this.updateProduct = this.updateProduct.bind(this);
         this.deleteProduct = this.deleteProduct.bind(this);
-        this.renderProductsList = this.renderProductsList.bind(this);
-        this.renderProductDetail = this.renderProductDetail.bind(this);
+
     }
 
     getProducts(req: Request, res: Response) {
@@ -86,20 +85,6 @@ class ProductController {
         } else {
             return res.status(404).send({ message: "Product not found!", });
         }
-    }
-
-    renderProductsList(req: Request, res: Response) {
-        res.render('products', {
-            PageTitle: 'Products List',
-            description: 'List of Products in the Store',
-            products: this.productService.findAll(),
-        });
-    }
-
-    renderProductDetail(req: Request, res: Response) {
-        res.render("product", {
-            product: this.productService.getProductById(+req.params.id),
-        })
     }
 
 }

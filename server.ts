@@ -4,6 +4,8 @@ import path from "path";
 import ProductController from "./controllers/productController";
 import ProductService from "./services/ProductService";
 import productsRouter from "./Routes/products.route";
+import ProductViewController from "./controllers/productsViewController";
+
 const app = express();
 
 app.use(express.json());
@@ -20,9 +22,11 @@ const productService = new ProductService(fakeProductsData);
 
 const productsController = new ProductController(productService);
 
-app.get('/products', (req, res) => productsController.renderProductsList(req, res));
+const productsViewController = new ProductViewController(productService);
 
-app.get('/products/:id', (req, res) => productsController.renderProductDetail(req, res));
+app.get('/products',productsViewController.renderProductsList);
+
+app.get('/products/:id',productsViewController.renderProductDetail);
 
 app.use("/api/products", productsRouter);
 
