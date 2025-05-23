@@ -1,0 +1,21 @@
+doctype html
+
+head
+    title Products Page
+    meta(charset="utf-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+    link(rel="stylesheet", href="/styles/style.css")
+body
+    div.moon
+    div.container
+        h2 Meet Our Products  
+        p= PageTitle
+        p.description= description
+        div.box
+            ul
+                each product in products
+                    a(href="/products/" + product.id)
+                      span= product.title
+                    p= product.description
+                    span= product.price
+                    hr
