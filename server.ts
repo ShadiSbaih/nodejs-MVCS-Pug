@@ -3,7 +3,7 @@ import { generateFakeProducts } from "./utils/fakeData";
 import path from "path";
 import ProductController from "./controllers/productController";
 import ProductService from "./services/ProductService";
-
+import productsRouter from "./Routes/products.route";
 const app = express();
 
 app.use(express.json());
@@ -23,23 +23,28 @@ const productsController = new ProductController(productService);
 app.get('/products', (req, res) => productsController.renderProductsList(req, res));
 
 app.get('/products/:id', (req, res) => productsController.renderProductDetail(req, res));
-// ** GET ALL PRODUCTS
-app.get("/api/products", (req, res) => productsController.getProducts(req, res));
-// ** GET A SINGLE PRODUCT
-app.get("/api/products/:id", (req: Request, res: Response) => productsController.getProductById(req, res));
 
-// ** CREATE A NEW PRODUCT
-app.post("/api/products", (req, res) => productsController.createProduct(req, res));
+app.use("/api/products", productsRouter);
 
-// ** UPDATE
-app.patch("/api/products/:id", (req, res) => productsController.updateProduct(req, res));
+// // ** GET ALL PRODUCTS
+// app.get("/api/products", );
 
-// ** DELETE
-app.delete("/api/products/:id", (req, res) => productsController.deleteProduct(req, res));
+// // ** CREATE A NEW PRODUCT
+// app.post("/api/products", (req, res) => productsController.createProduct(req, res));
+
+// // ** GET A SINGLE PRODUCT
+// app.get("/api/products/:id", (req: Request, res: Response) => productsController.getProductById(req, res));
+
+// // ** UPDATE
+// app.patch("/api/products/:id", (req, res) => productsController.updateProduct(req, res));
+
+// // ** DELETE
+// app.delete("/api/products/:id", (req, res) => productsController.deleteProduct(req, res));
 
 app.get('/', (req, res) => {
   res.render('index', { title: 'Hey', message: 'Hello there!' })
 });
+
 app.get('*', (req, res) => {
   res.status(404).render('notFound', { title: 'Page Not Found' });
 });

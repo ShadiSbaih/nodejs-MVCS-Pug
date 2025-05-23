@@ -6,6 +6,13 @@ class ProductController {
 
     constructor(private productService: ProductService) {
         this.productService = productService;
+        this.getProducts = this.getProducts.bind(this);
+        this.getProductById = this.getProductById.bind(this);
+        this.createProduct = this.createProduct.bind(this);
+        this.updateProduct = this.updateProduct.bind(this);
+        this.deleteProduct = this.deleteProduct.bind(this);
+        this.renderProductsList = this.renderProductsList.bind(this);
+        this.renderProductDetail = this.renderProductDetail.bind(this);
     }
 
     getProducts(req: Request, res: Response) {
