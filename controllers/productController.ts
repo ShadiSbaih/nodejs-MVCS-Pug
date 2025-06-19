@@ -15,6 +15,7 @@ class ProductController {
     }
 
     getProducts(req: Request, res: Response) {
+
         const filterQuery = req.query.filter as string;
         if (filterQuery) {
             return res.send(this.productService.filterByQuery(filterQuery));
@@ -23,6 +24,7 @@ class ProductController {
     }
 
     getProductById(req: Request, res: Response) {
+
         const productId = +req.params.id;
 
         if (isNaN(productId)) {

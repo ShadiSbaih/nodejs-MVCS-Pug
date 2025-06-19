@@ -1,13 +1,23 @@
-import { NextFunction, Request,Response } from "express";
+import { NextFunction, Request, Response } from "express";
 
 export default class ErrorMiddleware {
-    static handleError(err: Error, req: Request, res: Response, next: NextFunction) {
-        if( req.originalUrl.startsWith('/api') ) {
-            return res.status(500).json({
-                message: 'Internal Server Error',
-                error: err.message,
-                stack: err.stack
-            });
-        }
+  static handleError(err: Error, req: Request, res: Response, next: NextFunction) {
+    // * API & Views
+    if (req.originalUrl.startsWith("/api")) {
+      res.status(500).json({
+        error: "Internal Server Error",
+        message: err.message,
+        stack: process.env.NODE_ENV === "development" ? err.stack : null,
+      });
+      return;
     }
-} 
+
+    res.status(500).render("error", {
+      pageTitle: "Oops! Something went wrong",
+      message: "Something went wrong. Please try again later.",
+      error: err.message,
+    });
+
+    next();
+  }
+}
